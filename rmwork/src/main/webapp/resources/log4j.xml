@@ -1,0 +1,10 @@
+<!-- 
+	221222
+	log 레벨 설정
+ -->
+
+<!-- Root Logger -->
+<root>
+    <priority value="debug" />
+    <appender-ref ref="console" />
+</root>
