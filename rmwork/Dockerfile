@@ -1,19 +1,5 @@
-# AS <NAME> to name this stage as maven
-FROM maven:3.6.3 AS maven
-WORKDIR /usr/src/app
-COPY . /usr/src/app
+FROM openjdk:8-jre
 
-# Compile and package the application to an executable JAR
-RUN mvn package 
+COPY target/rmwork-1.0.0-BUILD-SNAPSHOT.jar app.jar
 
-# For Java 11, 
-FROM adoptopenjdk/openjdk8:alpine-jre
-
-ARG JAR_FILE=rmwork-1.0.0-BUILD-SNAPSHOT.jar
-
-WORKDIR /opt/app
-
-# Copy the spring-boot-api-tutorial.jar from the maven stage to the /opt/app directory of the current stage.
-COPY --from=maven /usr/src/app/target/${JAR_FILE} /opt/app/
-
-ENTRYPOINT ["java","-jar","rmwork-1.0.0-BUILD-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
