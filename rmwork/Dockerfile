@@ -1,5 +1,5 @@
 # 서버를 구동시킬 자바를 받아옵니다.
-FROM java:8
+FROM openjdk:8-jdk-alpine
 
 # `JAR_FILE` 이라는 이름으로 build 한 jar 파일을 지정합니다.
 ARG JAR_FILE=./build/libs/*.jar
