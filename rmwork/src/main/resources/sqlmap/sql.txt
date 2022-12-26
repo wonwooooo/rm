@@ -6,13 +6,35 @@ GRANT EXECUTE, SELECT, SHOW VIEW, ALTER, ALTER ROUTINE, CREATE, CREATE ROUTINE, 
 
 FLUSH PRIVILEGES;
 
-CREATE TABLE `book` (
-	`book_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`title` VARCHAR(200) NOT NULL,
-	`category` VARCHAR(200) NOT NULL DEFAULT '',
-	`price` INT NULL,
-	`insert_date` DATETIME NOT NULL DEFAULT NOW(),
-	PRIMARY KEY (`book_id`)
-)
-COLLATE='utf8mb4_general_ci'
-;
+CREATE TABLE `product` (
+	`id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	`product_name` varchar(255) NOT NULL,
+	`price` int NOT NULL,
+	`register_date` DATETIME NOT NULL DEFAULT current_timestamp,
+	`company_id` int NOT NULL
+);
+
+CREATE TABLE `company` (
+	`id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	`company_name` varchar(255) NOT NULL,
+	`ceo_name` varchar(255) NOT NULL,
+	`company_pnum` varchar(255) NOT NULL
+);
+
+CREATE TABLE `client` (
+	`id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	`name` varchar(255) NOT NULL,
+	`client_pnum` varchar(255) NOT NULL
+);
+
+CREATE TABLE `order` (
+	`id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	`product_id` int NOT NULL,
+	`client_id` int NOT NULL,
+	`order_date` DATETIME NOT NULL DEFAULT current_timestamp,
+	`order_id` varchar(255) NOT NULL
+);
+
+ALTER TABLE `product` ADD FOREIGN KEY (`company_id`) REFERENCES `company` (`id`) ON DELETE CASCADE;
+ALTER TABLE `order` ADD FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE;
+ALTER TABLE `order` ADD FOREIGN KEY (`client_id`) REFERENCES `client` (`id`) ON DELETE CASCADE;
